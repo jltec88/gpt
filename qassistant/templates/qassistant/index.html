@@ -1,0 +1,46 @@
+{% extends "layouts/admin.html" %}
+{% load i18n %}
+
+{% block title %}
+{% trans "QAssistant" %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="colors red clearfix">
+        <span class=" fa fa-3x fa-suitcase pull-left "></span>
+        <span class="title">{% trans "QAssistant" %}</span>
+        <span class="bajada">{% trans "Listado de prompts" %}</span>
+    </div>
+
+    <div class="content_box col-md-12">
+        <div class="box-container principal">
+            <ul class="nav list-group">
+
+                <li class="list-group-item no-item" id="search_form">
+                    <form action="" autocomplete="off">
+                        <input type="text" minlength="3" placeholder="{% trans "Buscar" %}" name="s" value="{{ search }}" class="form-control">
+                    </form>
+                </li>
+
+                {% include "administrator/ajax/all_companies.html" %}
+
+            </ul>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript">
+        // Block double click (Bug #1890)
+        $('a.link_company').on('click', function(e) {
+            e.preventDefault();
+            var new_url = $(this).attr("href");
+            $(this).attr("href", "#");
+            window.location.href = new_url;
+        });
+    </script>
+{% endblock js %}

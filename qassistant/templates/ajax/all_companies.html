@@ -1,0 +1,18 @@
+{% load trans from i18n %}
+{% load el_pagination_tags %}
+
+{% paginate 50 all_companies %}
+
+{% for company in all_companies %}
+    <li>
+        <a href="{% url 'login:choice_company' company_id=company.id %}" class="list-group-item link_company">
+            <img data-name="{{ company.initial_image }}" alt="" width="40" class="fa fa-5x pull-left profile-initial" >
+            <h2 class="title">{{ company.name|default_if_none:"Sin nombre" }}</h2>
+            <p class="bajada">{% trans "Descripción" %}: {{ company.description|default_if_none:_("Sin descripción") }}</p>
+            <p class="date">{% trans "Fecha creación" %}: {{ company.creation_datetime|date:"l d F, Y H:i" }}</p>
+        </a>
+    </li>
+{% endfor %}
+
+{% show_more %}
+
